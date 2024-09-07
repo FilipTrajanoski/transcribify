@@ -4,7 +4,7 @@ import {FormContainer, Label} from "./FormContainer.js";
 import Button from "./Button.jsx";
 import {useUploadVideo} from "./useUploadVideo.js";
 
-function UploadForm({uploadId, setUploadId, setProcessing}) {
+function UploadForm({uploadId, setUploadId, setProcessing, chosenLanguage}) {
     const [videoFile, setVideoFile] = useState("")
     const [videoUrl, setVideoUrl] = useState("")
 
@@ -15,7 +15,7 @@ function UploadForm({uploadId, setUploadId, setProcessing}) {
 
     function handleSubmit(e) {
         e.preventDefault();
-
+        console.log(chosenLanguage);
         if (!videoFile && !videoUrl) return;
 
         setUploadId(null);
@@ -31,7 +31,7 @@ function UploadForm({uploadId, setUploadId, setProcessing}) {
                 "summary_type": "paragraphs"
             },
             "transcription_config": {
-                "language": "auto",
+                "language": chosenLanguage,
                 "diarization": "speaker",
                 "operating_point": "enhanced",
                 "audio_filtering_config": {

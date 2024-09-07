@@ -6,6 +6,7 @@ const FormLayout = styled.main`
     align-content: center;
     align-items: center;
     //justify-content: center;
+    justify-items: center;
     gap: 3.2rem;
 `
 

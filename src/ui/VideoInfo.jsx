@@ -15,6 +15,7 @@ function VideoInfo(props) {
         <StyledVideoInfo>
             <p>Supported formats:</p>
             <p>aac, amr, flac, m4a, mp3, mp4, mpeg, ogg, wav</p>
+            <p>Not larger than 10MB</p>
         </StyledVideoInfo>
     );
 }

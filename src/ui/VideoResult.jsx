@@ -11,6 +11,7 @@ function VideoResult({uploadId}) {
     // if (isLoading || !uploadId) return <Spinner/>
 
     const {results, summary} = transcription ? transcription.data : {};
+    let accuracy = 0;
 
     // Helper function to render transcription text
     const renderTranscription = (results) => {
@@ -20,6 +21,7 @@ function VideoResult({uploadId}) {
         results.forEach((el, index) => {
             const wordData = el.alternatives[0];
             const word = wordData.content;
+            accuracy += wordData.confidence;
             const speaker = wordData.speaker;
 
             // Check for speaker change and add a separator if needed
@@ -39,6 +41,8 @@ function VideoResult({uploadId}) {
             }
         });
 
+        accuracy = (accuracy / results.length * 100).toFixed(2);
+
         return content;
     };
 
@@ -55,13 +59,14 @@ function VideoResult({uploadId}) {
             {isLoading || !uploadId ? (
                 <>
                     <Heading as={"h4"}>Processing video</Heading>
-                    <Spinner />
+                    <Spinner/>
                 </>
             ) : (
                 <div>
                     <Heading as={"h3"}>Result</Heading>
                     <p>{renderTranscription(results)}</p>
-                    {<p style={{ marginTop: "3rem" }}><strong>Summary of video:</strong> {summary.content}</p>}
+                    <p style={{marginTop: "3rem"}}><strong>Accuracy of transcription: </strong> {accuracy}%</p>
+                    <p style={{marginTop: "3rem"}}><strong>Summary of video:</strong> {summary.content}</p>
                 </div>
             )}
         </FormContainer>

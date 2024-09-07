@@ -7,6 +7,7 @@ import {DarkModeProvider} from "./context/DarkModeContext.jsx";
 import Languages from "./pages/Languages.jsx";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import UploadVideo from "./pages/UploadVideo.jsx";
+import {LanguageProvider} from "./context/LanguageContext.jsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -21,21 +22,23 @@ function App() {
         <DarkModeProvider>
             <QueryClientProvider client={queryClient}>
                 <ReactQueryDevtools initialIsOpen={false}/>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path={"/"}
-                               element={<AppLayout/>}>
-                            <Route path={"/languages"}
-                                   element={<Languages/>}/>
-                            <Route path={"/upload-video"}
-                                   element={<UploadVideo/>}/>
-                            <Route path={"/login"}
-                                   element={<Login/>}/>
-                            <Route path={"/signup"}
-                                   element={<Signup/>}/>
-                        </Route>
-                    </Routes>
-                </BrowserRouter>
+                <LanguageProvider>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path={"/"}
+                                   element={<AppLayout/>}>
+                                <Route path={"/languages"}
+                                       element={<Languages/>}/>
+                                <Route path={"/upload-video"}
+                                       element={<UploadVideo/>}/>
+                                <Route path={"/login"}
+                                       element={<Login/>}/>
+                                <Route path={"/signup"}
+                                       element={<Signup/>}/>
+                            </Route>
+                        </Routes>
+                    </BrowserRouter>
+                </LanguageProvider>
             </QueryClientProvider>
         </DarkModeProvider>
     )

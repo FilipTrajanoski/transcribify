@@ -5,6 +5,8 @@ import FormLayout from "../ui/FormLayout.jsx";
 import VideoInfo from "../ui/VideoInfo.jsx";
 import VideoResult from "../ui/VideoResult.jsx";
 import styled from "styled-components";
+import {useChosenLanguage} from "../context/LanguageContext.jsx";
+import {NavLink} from "react-router-dom";
 
 const VideoLayout = styled.div`
     display: flex;
@@ -14,15 +16,21 @@ const VideoLayout = styled.div`
 
 function UploadVideo(props) {
     const [uploadId, setUploadId] = useState(null);
-    const [processing, setProcessing] = useState(false)
+    const [processing, setProcessing] = useState(false);
+
+    const {chosenLanguage} = useChosenLanguage();
 
     return (
         <FormLayout>
             <Heading>Choose your video for transcription</Heading>
+            {chosenLanguage === "auto" ?
+                <Heading as={"h4"}>For better performance, please choose a language from the <NavLink to={"/languages"}
+                                                                                                      style={{color: "var(--color-brand-600)"}}>list</NavLink></Heading> : null}
             <VideoLayout>
                 <UploadForm uploadId={uploadId}
                             setUploadId={setUploadId}
-                            setProcessing={setProcessing}/>
+                            setProcessing={setProcessing}
+                            chosenLanguage={chosenLanguage}/>
                 {processing && <VideoResult uploadId={uploadId}/>}
             </VideoLayout>
             <VideoInfo/>
