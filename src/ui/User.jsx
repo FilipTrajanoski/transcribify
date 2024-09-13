@@ -1,11 +1,10 @@
 import React from 'react';
 
-function User(props) {
+function User({user}) {
     return (
         <div>
-            <img src={"..."} alt={"..."}/>
-            <span>First</span>
-            <span>Last</span>
+            <img src={user.image} alt={"..."}/>
+            <span>{user.firstName} {user.lastName}</span>
         </div>
     );
 }

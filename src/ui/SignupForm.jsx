@@ -1,79 +1,98 @@
 import React, {useState} from 'react';
 import Input from "./Input.jsx";
 import Button from "./Button.jsx";
-import {FormContainer, Label} from "./FormContainer.js";
-import authService from "../service/authService.js";
-import {useNavigate} from "react-router-dom";
+import {FormContainer} from "./FormContainer.js";
+import {useForm} from "react-hook-form";
+import FormRow from "./FormRow.jsx";
+import {useSignup} from "./useSignup.js";
 
 function SignupForm(props) {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [image, setImage] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
+    const {signup, isLoading} = useSignup();
+    const {register, formState: {errors}, getValues, handleSubmit, reset} = useForm();
 
-    const navigate = useNavigate();
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
+    function onSubmit({firstName, lastName, email, password, image}) {
         if (!firstName || !lastName || !email || !password) return;
-        console.log(firstName, lastName, email, password);
-        authService.signup(firstName, lastName, email, image, password, "USER")
-            .then( () => navigate("/"));
+
+        const role = "USER"
+        signup({firstName, lastName, email, image, password, role}, {
+            onSettled: () => reset()
+        });
     }
 
     return (
         <FormContainer>
-            <form onSubmit={handleSubmit}>
-                <Label htmlFor={"firstName"}>First Name</Label>
-                <Input id={"firstName"}
-                       type={"text"}
-                       name={"firstName"}
-                       value={firstName}
-                       onChange={(e) => setFirstName(e.target.value)}
-                       required={true}/>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <FormRow label={"First Name"}
+                         error={errors?.firstName?.message}>
+                    <Input id={"firstName"}
+                           type={"text"}
+                           name={"firstName"}
+                           disabled={isLoading}
+                           {...register("firstName", {
+                               required: "First name is required"
+                           })}/>
+                </FormRow>
 
-                <Label htmlFor={"lastName"}>Last Name</Label>
-                <Input id={"lastName"}
-                       type={"text"}
-                       name={"lastName"}
-                       value={lastName}
-                       onChange={(e) => setLastName(e.target.value)}
-                       required={true}/>
+                <FormRow label={"Last Name"}
+                         error={errors?.lastName?.message}>
+                    <Input id={"lastName"}
+                           type={"text"}
+                           name={"lastName"}
+                           disabled={isLoading}
+                           {...register("lastName", {
+                               required: "Last name is required",
+                           })}/>
+                </FormRow>
+                <FormRow label={"Email"}
+                         error={errors?.email?.message}>
+                    <Input id={"email"}
+                           type={"email"}
+                           name={"email"}
+                           disabled={isLoading}
+                           {...register("email", {
+                               required: "Please provide your email",
+                               pattern: {
+                                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                   message: "Please enter a valid email"
+                               }
+                           })}/>
+                </FormRow>
+                <FormRow label={"Password"}
+                         error={errors?.password?.message}>
+                    <Input id={"password"}
+                           type={"password"}
+                           name={"password"}
+                           disabled={isLoading}
+                           {...register("password", {
+                               required: "Password is required",
+                               minLength: {
+                                   value: 10,
+                                   message: "Password must be at least 10 characters long"
+                               }
+                           })}/>
+                </FormRow>
+                <FormRow label={"Password Confirm"}
+                         error={errors?.passwordConfirm?.message}>
+                    <Input id={"passwordConfirm"}
+                           type={"password"}
+                           name={"passwordConfirm"}
+                           disabled={isLoading}
+                           {...register("passwordConfirm", {
+                               required: "This field is required",
+                               validate: (value) => value === getValues().password || "Passwords need to match"
+                           })}/>
+                </FormRow>
+                <FormRow label={"Image"}>
+                    <Input id={"image"}
+                           type={"file"}
+                           name={"image"}
+                           disabled={isLoading}
+                    />
+                </FormRow>
 
-                <Label htmlFor={"image"}>Image</Label>
-                <Input id={"image"}
-                       type={"file"}
-                       name={"image"}
-                       value={image}
-                       onChange={(e) => setImage(e.target.value)}/>
-
-                <Label htmlFor={"email"}>Email</Label>
-                <Input id={"email"}
-                       type={"email"}
-                       name={"email"}
-                       value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                       required={true}/>
-
-                <Label htmlFor={"password"}>Password</Label>
-                <Input id={"password"}
-                       type={"password"}
-                       name={"password"}
-                       value={password}
-                       onChange={(e) => setPassword(e.target.value)}
-                       required={true}/>
-
-                <Label htmlFor={"passwordConfirm"}>Password Confirm</Label>
-                <Input id={"passwordConfirm"}
-                       type={"password"}
-                       name={"passwordConfirm"}
-                       value={passwordConfirm}
-                       onChange={(e) => setPasswordConfirm(e.target.value)}
-                       required={true}/>
-                <Button>Sign up</Button>
+                <FormRow>
+                    <Button disabled={isLoading}>Sign up</Button>
+                </FormRow>
             </form>
         </FormContainer>
     );

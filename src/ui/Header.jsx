@@ -10,6 +10,7 @@ const StyledHeader = styled.header`
     display: flex;
     border-bottom: 1px solid var(--color-grey-200);
     padding: 2rem 4rem;
+    align-items: center;
 `
 
 function Header(props) {

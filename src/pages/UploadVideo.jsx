@@ -24,8 +24,9 @@ function UploadVideo(props) {
         <FormLayout>
             <Heading>Choose your video for transcription</Heading>
             {chosenLanguage === "auto" ?
-                <Heading as={"h4"}>For better performance, please choose a language from the <NavLink to={"/languages"}
-                                                                                                      style={{color: "var(--color-brand-600)"}}>list</NavLink></Heading> : null}
+                <Heading as={"h4"}>For better performance, please choose the language of your video from
+                    the <NavLink to={"/languages"}
+                                 style={{color: "var(--color-brand-600)"}}>list</NavLink></Heading> : null}
             <VideoLayout>
                 <UploadForm uploadId={uploadId}
                             setUploadId={setUploadId}

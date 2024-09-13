@@ -127,3 +127,73 @@ a {
 ul {
     list-style: none;
 }
+
+.slogan {
+    font-size: 7rem;
+    font-weight: bold;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.slogan span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: slideUp 0.5s forwards;
+}
+
+.slogan span:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.slogan span:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.slogan span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.slogan span:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+.slogan span:nth-child(5) {
+    animation-delay: 1s;
+}
+
+.slogan span:nth-child(6) {
+    animation-delay: 1.2s;
+}
+
+.slogan span:nth-child(7) {
+    animation-delay: 1.4s;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* WebKit-based browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--color-grey-300);
+}
+
+/* Gradient Thumb */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--color-brand-500), var(--color-brand-200), var(--color-brand-500));
+    border-radius: 10px;
+}
+
+/* Thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, var(--color-brand-800), var(--color-brand-200), var(--color-brand-800));
+}

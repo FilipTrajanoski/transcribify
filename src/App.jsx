@@ -8,6 +8,8 @@ import Languages from "./pages/Languages.jsx";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import UploadVideo from "./pages/UploadVideo.jsx";
 import {LanguageProvider} from "./context/LanguageContext.jsx";
+import Homepage from "./pages/Homepage.jsx";
+import {Toaster} from "react-hot-toast";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -27,6 +29,7 @@ function App() {
                         <Routes>
                             <Route path={"/"}
                                    element={<AppLayout/>}>
+                                <Route index element={<Homepage/>}/>
                                 <Route path={"/languages"}
                                        element={<Languages/>}/>
                                 <Route path={"/upload-video"}
@@ -39,6 +42,27 @@ function App() {
                         </Routes>
                     </BrowserRouter>
                 </LanguageProvider>
+
+                <Toaster position={"top-center"}
+                         gutter={12}
+                         toastOptions={{
+                             success: {
+                                 duration: 3000
+                             },
+                             error: {
+                                 duration: 5000
+                             },
+                             style: {
+                                 fontSize: "18px",
+                                 maxWidth: "500px",
+                                 padding: "16px 24px",
+                                 backgroundColor: "var(--color-grey-0)",
+                                 color: "var(--color-grey-700)",
+                                 border: "1px solid var(--color-grey-300)",
+                                 borderRadius: "20px"
+                             }
+                         }}
+                />
             </QueryClientProvider>
         </DarkModeProvider>
     )

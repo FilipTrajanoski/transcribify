@@ -3,48 +3,53 @@ import Input from "./Input.jsx";
 import Button from "./Button.jsx";
 import {FormContainer, Label} from "./FormContainer.js";
 import {useLogin} from "./useLogin.js";
-import Spinner from "./Spinner.jsx";
+import {useForm} from "react-hook-form";
+import FormRow from "./FormRow.jsx";
 
 function LoginForm(props) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
     const {login, isLoading} = useLogin();
+    const {register, formState: {errors}, handleSubmit, reset} = useForm();
 
-    function handleSubmit(e) {
-        e.preventDefault();
-
+    function onSubmit({email, password}) {
         if (!email || !password) return;
 
         login({email, password}, {
-            onSettled: () => {
-                setEmail("");
-                setPassword("");
-            }
+            onSettled: () => reset()
         })
     }
 
     return (
         <FormContainer>
-            <form onSubmit={handleSubmit}>
-                <Label htmlFor={"email"}>Email</Label>
-                <Input id={"email"}
-                       type={"email"}
-                       name={"email"}
-                       value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                       required={true}
-                       disabled={isLoading}/>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <FormRow label={"Email"}
+                         error={errors?.email?.message}>
+                    <Input id={"email"}
+                           type={"email"}
+                           name={"email"}
+                           disabled={isLoading}
+                           {...register("email", {
+                               required: "Email is required",
+                               pattern: {
+                                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                   message: "Please enter a valid email"
+                               }
+                           })}/>
+                </FormRow>
 
-                <Label htmlFor={"password"}>Password</Label>
-                <Input id={"password"}
-                       type={"password"}
-                       name={"password"}
-                       value={password}
-                       onChange={(e) => setPassword(e.target.value)}
-                       required={true}
-                       disabled={isLoading}/>
-                <Button>{isLoading ? 'Submitting' : 'Login'}</Button>
+                <FormRow label={"Password"}
+                         error={errors?.password?.message}>
+                    <Input id={"password"}
+                           type={"password"}
+                           name={"password"}
+                           disabled={isLoading}
+                           {...register("password", {
+                               required: "Password is required"
+                           })}/>
+                </FormRow>
+
+                <FormRow>
+                    <Button disabled={isLoading}>{isLoading ? 'Submitting' : 'Login'}</Button>
+                </FormRow>
             </form>
         </FormContainer>
     );

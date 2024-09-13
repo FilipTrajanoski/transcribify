@@ -1,14 +1,15 @@
 import React from 'react';
 import {useDarkMode} from "../context/DarkModeContext.jsx";
-import Button from "./Button.jsx";
+import ButtonIcon from "./ButtonIcon.js";
+import {HiOutlineMoon, HiOutlineSun} from "react-icons/hi2";
 
 function DarkModeToggle(props) {
     const {isDarkMode, toggleDarkMode} = useDarkMode();
 
     return (
-        <Button onClick={toggleDarkMode}>
-            {isDarkMode ? 'Light' : 'Dark'}
-        </Button>
+        <ButtonIcon style={{marginLeft: "2rem"}} onClick={toggleDarkMode}>
+            {isDarkMode ? <HiOutlineSun/> : <HiOutlineMoon/>}
+        </ButtonIcon>
     );
 }
 

@@ -6,7 +6,7 @@ function SignupButton(props) {
     const navigate = useNavigate();
 
     return (
-        <Button onClick={() => navigate("/signup")}>Sign up</Button>
+        <Button variation={"secondary"} onClick={() => navigate("/signup")}>Sign up</Button>
     );
 }
 
