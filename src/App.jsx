@@ -10,6 +10,8 @@ import UploadVideo from "./pages/UploadVideo.jsx";
 import {LanguageProvider} from "./context/LanguageContext.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import {Toaster} from "react-hot-toast";
+import PageNotFound from "./pages/PageNotFound.jsx";
+import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -29,16 +31,19 @@ function App() {
                         <Routes>
                             <Route path={"/"}
                                    element={<AppLayout/>}>
-                                <Route index element={<Homepage/>}/>
+                                <Route index
+                                       element={<Homepage/>}/>
                                 <Route path={"/languages"}
                                        element={<Languages/>}/>
                                 <Route path={"/upload-video"}
-                                       element={<UploadVideo/>}/>
+                                       element={<ProtectedRoute><UploadVideo/></ProtectedRoute>}/>
                                 <Route path={"/login"}
                                        element={<Login/>}/>
                                 <Route path={"/signup"}
                                        element={<Signup/>}/>
                             </Route>
+                            <Route path={"*"}
+                                   element={<PageNotFound/>}/>
                         </Routes>
                     </BrowserRouter>
                 </LanguageProvider>

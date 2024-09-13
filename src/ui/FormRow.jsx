@@ -22,7 +22,7 @@ function FormRow({children, label, error}) {
         <StyledFormRow>
             {label && <Label htmlFor={children.props.id}>{label}</Label>}
             {children}
-            {error && <Error>{error}</Error>}
+            {error && <Error className={"error-message"}>{error}</Error>}
         </StyledFormRow>
     );
 }

@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
-const FormContainer = styled.div`
-    //max-width: 400px;
-    width: 25dvw;
-    //margin: auto;
+const VideoContainer = styled.div`
+    width: 50dvw;
     padding: 2rem;
     background-color: var(--color-grey-0);
     border-radius: 8px;
@@ -12,9 +10,4 @@ const FormContainer = styled.div`
     height: fit-content;
 `;
 
-const Label = styled.label`
-    margin-bottom: 0.5rem;
-    color: var(--color-grey-800);
-`;
-
-export {FormContainer, Label};
+export {VideoContainer}

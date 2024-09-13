@@ -4,6 +4,7 @@ import Spinner from "./Spinner.jsx";
 import Heading from "./Heading.jsx";
 import videoService from "../service/videoService.js";
 import {useVideoResult} from "./useVideoResult.js";
+import {VideoContainer} from "./VideoContainer.jsx";
 
 function VideoResult({uploadId}) {
     const {isLoading, transcription} = useVideoResult(uploadId);
@@ -55,7 +56,7 @@ function VideoResult({uploadId}) {
     // }, [setProcessing, uploadId])
 
     return (
-        <FormContainer>
+        <VideoContainer>
             {isLoading || !uploadId ? (
                 <>
                     <Heading as={"h4"}>Processing video</Heading>
@@ -69,7 +70,7 @@ function VideoResult({uploadId}) {
                     <p style={{marginTop: "3rem"}}><strong>Summary of video:</strong> {summary.content}</p>
                 </div>
             )}
-        </FormContainer>
+        </VideoContainer>
     );
 }
 

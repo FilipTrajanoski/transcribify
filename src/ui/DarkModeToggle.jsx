@@ -7,7 +7,7 @@ function DarkModeToggle(props) {
     const {isDarkMode, toggleDarkMode} = useDarkMode();
 
     return (
-        <ButtonIcon style={{marginLeft: "2rem"}} onClick={toggleDarkMode}>
+        <ButtonIcon style={{marginLeft: "2rem", border: "1px solid var(--color-grey-300)"}} onClick={toggleDarkMode}>
             {isDarkMode ? <HiOutlineSun/> : <HiOutlineMoon/>}
         </ButtonIcon>
     );

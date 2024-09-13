@@ -6,6 +6,7 @@ const Input = styled.input`
     border: 1px solid var(--color-grey-300);
     border-radius: var(--border-radius-sm);
     color: var(--color-grey-800);
+    background-color: var(--color-grey-50);
 
     &:focus {
         border-color: var(--color-brand-500);
