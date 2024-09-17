@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Input from "./Input.jsx";
 import Button from "./Button.jsx";
 import {FormContainer} from "./FormContainer.js";
@@ -14,7 +14,18 @@ function SignupForm(props) {
         if (!firstName || !lastName || !email || !password) return;
 
         const role = "USER"
-        signup({firstName, lastName, email, image, password, role}, {
+        const formData = new FormData();
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);
+        formData.append("email", email);
+        formData.append("password", password)
+        formData.append("role", role);
+
+        if(image && image[0]){
+            formData.append("image", image[0]);
+        }
+
+        signup(formData, {
             onSettled: () => reset()
         });
     }
@@ -86,7 +97,9 @@ function SignupForm(props) {
                     <Input id={"image"}
                            type={"file"}
                            name={"image"}
+                           accept={"image/*"}
                            disabled={isLoading}
+                           {...register("image")}
                     />
                 </FormRow>
 

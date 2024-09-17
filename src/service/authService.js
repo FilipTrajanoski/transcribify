@@ -7,14 +7,11 @@ const authService = {
             "password": password
         })
     },
-    signup: async (firstName, lastName, email, image, password, role) => {
-        return axios.post("/auth/signup", {
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "image": image,
-            "password": password,
-            "role": role
+    signup: async (formData) => {
+        return axios.post("/auth/signup", formData, {
+            headers: {
+                "Content-type": "multipart/form-data"
+            }
         })
     }
 }

@@ -10,7 +10,8 @@ function ProtectedRoute({children}) {
     useEffect(function (){
         if(!authenticated ){
             toast("Please log in to use this function", {
-                icon: '🔒'
+                icon: '🔒',
+                duration: 3000
             });
             navigate("/login");
         }

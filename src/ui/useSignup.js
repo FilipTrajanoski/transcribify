@@ -8,8 +8,7 @@ export function useSignup() {
     const navigate = useNavigate();
 
     const {mutate: signup, isLoading} = useMutation({
-        mutationFn: ({firstName, lastName, email, image, password, role}) =>
-            authService.signup(firstName, lastName, email, image, password, role),
+        mutationFn: authService.signup,
         onSuccess: (res) => {
             localStorage.setItem('jwt', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data));
