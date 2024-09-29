@@ -7,7 +7,7 @@ import FormRow from "./FormRow.jsx";
 import {useSignup} from "./useSignup.js";
 
 function SignupForm(props) {
-    const {signup, isLoading} = useSignup();
+    const {signup, isLoading: isPending} = useSignup();
     const {register, formState: {errors}, getValues, handleSubmit, reset} = useForm();
 
     function onSubmit({firstName, lastName, email, password, image}) {
@@ -38,7 +38,7 @@ function SignupForm(props) {
                     <Input id={"firstName"}
                            type={"text"}
                            name={"firstName"}
-                           disabled={isLoading}
+                           disabled={isPending}
                            {...register("firstName", {
                                required: "First name is required"
                            })}/>
@@ -49,7 +49,7 @@ function SignupForm(props) {
                     <Input id={"lastName"}
                            type={"text"}
                            name={"lastName"}
-                           disabled={isLoading}
+                           disabled={isPending}
                            {...register("lastName", {
                                required: "Last name is required",
                            })}/>
@@ -59,7 +59,7 @@ function SignupForm(props) {
                     <Input id={"email"}
                            type={"email"}
                            name={"email"}
-                           disabled={isLoading}
+                           disabled={isPending}
                            {...register("email", {
                                required: "Please provide your email",
                                pattern: {
@@ -73,7 +73,7 @@ function SignupForm(props) {
                     <Input id={"password"}
                            type={"password"}
                            name={"password"}
-                           disabled={isLoading}
+                           disabled={isPending}
                            {...register("password", {
                                required: "Password is required",
                                minLength: {
@@ -87,7 +87,7 @@ function SignupForm(props) {
                     <Input id={"passwordConfirm"}
                            type={"password"}
                            name={"passwordConfirm"}
-                           disabled={isLoading}
+                           disabled={isPending}
                            {...register("passwordConfirm", {
                                required: "This field is required",
                                validate: (value) => value === getValues().password || "Passwords need to match"
@@ -98,13 +98,13 @@ function SignupForm(props) {
                            type={"file"}
                            name={"image"}
                            accept={"image/*"}
-                           disabled={isLoading}
+                           disabled={isPending}
                            {...register("image")}
                     />
                 </FormRow>
 
                 <FormRow>
-                    <Button disabled={isLoading}>Sign up</Button>
+                    <Button disabled={isPending}>Sign up</Button>
                 </FormRow>
             </form>
         </FormContainer>

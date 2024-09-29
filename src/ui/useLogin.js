@@ -7,10 +7,9 @@ export function useLogin() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
-    const {mutate: login, isLoading} = useMutation({
+    const {mutate: login, isPending} = useMutation({
         mutationFn: ({email, password}) => authService.login(email, password),
         onSuccess: (res) => {
-            localStorage.setItem('jwt', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data));
             queryClient.setQueryData(["user"], res.data);
             toast.success("Successfully logged in");
@@ -19,5 +18,5 @@ export function useLogin() {
         onError: (error) => toast.error(error.response.data.message)
     })
 
-    return {login, isLoading};
+    return {login, isPending};
 }

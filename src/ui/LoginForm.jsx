@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Input from "./Input.jsx";
 import Button from "./Button.jsx";
-import {FormContainer, Label} from "./FormContainer.js";
+import {FormContainer} from "./FormContainer.js";
 import {useLogin} from "./useLogin.js";
 import {useForm} from "react-hook-form";
 import FormRow from "./FormRow.jsx";
 
 function LoginForm(props) {
-    const {login, isLoading} = useLogin();
+    const {login, isPending} = useLogin();
     const {register, formState: {errors}, handleSubmit, reset} = useForm();
 
     function onSubmit({email, password}) {
@@ -26,7 +26,7 @@ function LoginForm(props) {
                     <Input id={"email"}
                            type={"email"}
                            name={"email"}
-                           disabled={isLoading}
+                           disabled={isPending}
                            {...register("email", {
                                required: "Email is required",
                                pattern: {
@@ -41,14 +41,14 @@ function LoginForm(props) {
                     <Input id={"password"}
                            type={"password"}
                            name={"password"}
-                           disabled={isLoading}
+                           disabled={isPending}
                            {...register("password", {
                                required: "Password is required"
                            })}/>
                 </FormRow>
 
                 <FormRow>
-                    <Button disabled={isLoading}>{isLoading ? 'Submitting' : 'Login'}</Button>
+                    <Button disabled={isPending}>{isPending ? 'Submitting' : 'Login'}</Button>
                 </FormRow>
             </form>
         </FormContainer>

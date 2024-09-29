@@ -1,33 +1,34 @@
 import axios from "axios"
-
-export const getAuthToken = () => {
-    return window.localStorage.getItem('auth_token');
-};
-
-export const setAuthHeader = (token) => {
-    if (token !== null) {
-        window.localStorage.setItem("auth_token", token);
-    } else {
-        window.localStorage.removeItem("auth_token");
-    }
-};
+import toast from "react-hot-toast";
 
 const instance = axios.create({
-    baseURL: "http://localhost:8080/api/v1"
+    baseURL: "http://localhost:8080/api/v1",
+    withCredentials: true,
 })
 
 // Add a request interceptor to include the token in every request
 instance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('jwt');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
         return config;
     },
     (error) => {
         return Promise.reject(error);
     }
 );
+
+instance.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response.status === 401) {
+            // Token expired or invalid
+            localStorage.removeItem("user");
+            toast("Session expired. Please log in again.", {
+                icon: '😕',
+                duration: 3000
+            });
+        }
+        return Promise.reject(error);
+    }
+)
 
 export default instance;

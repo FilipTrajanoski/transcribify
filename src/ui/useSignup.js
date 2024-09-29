@@ -7,10 +7,9 @@ export function useSignup() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
-    const {mutate: signup, isLoading} = useMutation({
+    const {mutate: signup, isPending} = useMutation({
         mutationFn: authService.signup,
         onSuccess: (res) => {
-            localStorage.setItem('jwt', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data));
             queryClient.setQueryData(["user"], res.data)
             toast.success("Account successfully created!");
@@ -21,5 +20,5 @@ export function useSignup() {
         }
     })
 
-    return {signup, isLoading};
+    return {signup, isPending};
 }

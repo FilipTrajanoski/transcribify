@@ -1,4 +1,4 @@
 export function isAuthenticated(){
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("user");
     return !!token;
 }

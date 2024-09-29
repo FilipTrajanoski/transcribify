@@ -12,6 +12,7 @@ const StyledImg = styled.img`
     border-radius: 40px;
     box-shadow: var(--shadow-md);
     width: 40px;
+    height: 40px;
     border: 1px solid black;
 `
 

@@ -13,6 +13,9 @@ const authService = {
                 "Content-type": "multipart/form-data"
             }
         })
+    },
+    logout: async () => {
+        return axios.delete("/auth/logout");
     }
 }
 

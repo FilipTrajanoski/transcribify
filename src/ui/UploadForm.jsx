@@ -22,9 +22,8 @@ function UploadForm({uploadId, setUploadId, setProcessing, chosenLanguage}) {
         setUploadId(null);
 
         const formData = new FormData();
-        formData.append("data_file", videoFile);
 
-        const config = JSON.stringify({
+        const config = {
             "type": "transcription",
             "summarization_config": {
                 "content_type": "auto",
@@ -39,11 +38,20 @@ function UploadForm({uploadId, setUploadId, setProcessing, chosenLanguage}) {
                     "volume_threshold": 0
                 }
             }
-        })
+        }
 
-        formData.append("config", config)
+        if (videoFile) formData.append("data_file", videoFile);
+        else {
+            formData.append("url", videoUrl);
+            config["fetch_data"] = {"url": videoUrl}
+        }
+
+
+        formData.append("config", JSON.stringify(config));
         uploadVideo(formData)
         setProcessing(true);
+        setVideoFile("")
+        setVideoUrl("");
     }
 
     return (

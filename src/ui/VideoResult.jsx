@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
-import {FormContainer} from "./FormContainer.js";
 import Spinner from "./Spinner.jsx";
 import Heading from "./Heading.jsx";
-import videoService from "../service/videoService.js";
 import {useVideoResult} from "./useVideoResult.js";
 import {VideoContainer} from "./VideoContainer.jsx";
 
